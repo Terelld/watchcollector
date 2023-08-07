@@ -14,3 +14,7 @@ def watches_index(request):
     return render(request, 'watches/index.html', {
         'watches': watches 
     })
+
+def watches_detail(request, watch_id):
+    watch = Watch.objects.get(id=watch_id)
+    return render(request, 'watches/detail.html', { 'watch' : watch })

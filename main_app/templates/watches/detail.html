@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Watches List</h1>
+<h1>Watch Details</h1>
 
-{% for watch in watches %}
-  <div class="card">
-    <a href="/watches/{{ watch.id }}">
-      <div class="card-content">
+
+<div class="card">
+    <div class="card-content">
         <span class="card-title">{{ watch.brand }}</span>
         <p>Model: {{ watch.model }}</p>
         <p>Band Material: {{ watch.band_material }}</p>
         <p>Color: {{ watch.color }}</p>
         <p>Interface: {{ watch.interface }}</p>
         <p>Description: {{ watch.description }}</p>
-      </div>
-    </a>
-  </div>
-{% endfor %}
+    </div>
+</div>
+
 {% endblock %}
