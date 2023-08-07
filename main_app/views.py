@@ -14,4 +14,4 @@ def about(request):
     return render(request, 'about.html')
 
 def watches_index(request):
-    return render(request, 'watches/index.html')
+    return render(request, 'watches/index.html', {'watches': watches})
