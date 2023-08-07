@@ -1,10 +1,6 @@
 from django.shortcuts import render
+from .models import Watch
 
-watches = [
-    {'brand': 'Fossil', 'model':'', 'band material': 'metal', 'color': 'gun metal', 'interface': 'digital', 'description': 'casual'},
-    {'brand': 'Rolex', 'model':'', 'band material': 'leather', 'color': 'brown', 'interface': 'analog', 'description': 'formal'},
-    {'brand': 'Nike', 'model':'', 'band material': 'silicone', 'color': 'black', 'interface': 'digital', 'description': 'athletic'},
-]
 
 # Create your views here.
 def home(request):
@@ -14,4 +10,7 @@ def about(request):
     return render(request, 'about.html')
 
 def watches_index(request):
-    return render(request, 'watches/index.html', {'watches': watches})
+    watches = Watch.objects.all()
+    return render(request, 'watches/index.html', {
+        'watches': watches 
+    })
