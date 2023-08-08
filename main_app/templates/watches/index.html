@@ -4,7 +4,7 @@
 
 {% for watch in watches %}
   <div class="card">
-    <a href="/watches/{{ watch.id }}">
+    <a href="{% url 'detail' watch.id %}">
       <div class="card-content">
         <span class="card-title">{{ watch.brand }}</span>
         <p>Model: {{ watch.model }}</p>

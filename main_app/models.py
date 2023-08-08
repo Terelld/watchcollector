@@ -1,11 +1,9 @@
 from django.db import models
+from django.urls import reverse
 
 
 
-INTERFACE_CHOICES = [
-    ('digital', 'Digital'),
-    ('analog', 'Analog'),
-]
+
 
 # Create your models here.
 class Watch(models.Model): 
@@ -13,8 +11,11 @@ class Watch(models.Model):
     model = models.CharField(max_length=20)
     color = models.CharField(max_length=20)
     band_material = models.CharField(max_length=20)
-    interface = models.CharField(max_length=10, choices=INTERFACE_CHOICES)
+    interface = models.CharField(max_length=20)
     description = models.TextField()
 
     def __str__(self):
-        return f'{self.brand} - {self.model}'
+        return f'{self.brand} - {self.model} ({self.id})'
+    
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'watch_id': self.id})
