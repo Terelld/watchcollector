@@ -1,6 +1,10 @@
 from django.db import models
 from django.urls import reverse
 
+SERVICE_TYPE = (
+    ('R', 'Repair'),
+    ('M', 'Maintenance'),
+)
 
 
 
@@ -19,3 +23,16 @@ class Watch(models.Model):
     
     def get_absolute_url(self):
         return reverse('detail', kwargs={'watch_id': self.id})
+    
+
+class Service(models.Model):
+    date = models.DateField()
+    service_type = models.CharField(
+        max_length=1,
+        choices=SERVICE_TYPE,
+        default=SERVICE_TYPE[0][0]
+    ) 
+    cat = models.ForeignKey(Watch, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.get_service_type_display()} on {self.date}'
