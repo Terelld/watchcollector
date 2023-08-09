@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Watch
+from .forms import ServiceForm
 
 
 # Create your views here.
@@ -19,7 +20,11 @@ def watches_index(request):
 
 def watches_detail(request, watch_id):
     watch = Watch.objects.get(id=watch_id)
-    return render(request, 'watches/detail.html', { 'watch' : watch })
+    service_form = ServiceForm()
+    return render(request, 'watches/detail.html', { 
+        'watch' : watch, 'service_form': service_form 
+    })
+
 
 class WatchCreate(CreateView):
     model = Watch
