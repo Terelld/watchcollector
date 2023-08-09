@@ -26,13 +26,13 @@ class Watch(models.Model):
     
 
 class Service(models.Model):
-    date = models.DateField()
+    date = models.DateField('service date')
     service_type = models.CharField(
         max_length=1,
         choices=SERVICE_TYPE,
         default=SERVICE_TYPE[0][0]
     ) 
-    cat = models.ForeignKey(Watch, on_delete=models.CASCADE)
+    watch = models.ForeignKey(Watch, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.get_service_type_display()} on {self.date}'
