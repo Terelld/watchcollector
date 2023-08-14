@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 
-from .models import Watch
+from .models import Watch, Accessory
 from .forms import ServiceForm
 
 
@@ -25,6 +26,13 @@ def watches_detail(request, watch_id):
         'watch' : watch, 'service_form': service_form 
     })
 
+def add_service(request, watch_id):
+    form = ServiceForm(request.POST)
+    if form.is_valid():
+        new_service = form.save(commit=False)
+        new_service.watch_id = watch_id
+        new_service.save()
+    return redirect('detail', watch_id=watch_id)
 
 class WatchCreate(CreateView):
     model = Watch
@@ -38,3 +46,23 @@ class WatchUpdate(UpdateView):
 class WatchDelete(DeleteView):
     model = Watch
     success_url = '/watches'
+
+
+
+class AccessoryList(ListView):
+  model = Accessory
+
+class AccessoryDetail(DetailView):
+  model = Accessory
+
+class AccessoryCreate(CreateView):
+  model = Accessory
+  fields = '__all__'
+
+class AccessoryUpdate(UpdateView):
+  model = Accessory
+  fields = ['name', 'color']
+
+class AccessoryDelete(DeleteView):
+  model = Accessory
+  success_url = '/accessorys'

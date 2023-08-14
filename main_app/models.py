@@ -10,6 +10,16 @@ SERVICE_TYPE = (
 
 
 # Create your models here.
+class Accessory(models.Model):
+    name = models.CharField(max_length=50)
+    color = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('accesorys_detail', kwargs={'pk': self.id})
+
 class Watch(models.Model): 
     brand = models.CharField(max_length=20)
     model = models.CharField(max_length=20)
@@ -17,6 +27,8 @@ class Watch(models.Model):
     band_material = models.CharField(max_length=20)
     interface = models.CharField(max_length=20)
     description = models.TextField()
+
+    accessorys = models.ManyToManyField(Accessory)
 
     def __str__(self):
         return f'{self.brand} - {self.model} ({self.id})'
@@ -36,3 +48,6 @@ class Service(models.Model):
 
     def __str__(self):
         return f'{self.get_service_type_display()} on {self.date}'
+    
+    class Meta:
+        ordering = ['-date']
