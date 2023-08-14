@@ -19,7 +19,8 @@
             </div>
         </div>
     </div>   
-
+    <hr>
+    
 
 <div class="col s6">
     <form action="{% url 'add_service' watch.id %}" method="POST">
@@ -29,7 +30,7 @@
         <input type="submit" class="btn" value="Add Service">
       </form>
       <!-- New Markup Above -->
-      <table class="striped">
+      
     <table class="striped">
         <h5>Service Details</h5>
       <thead>
@@ -45,6 +46,54 @@
       </tbody>
     </table>
 </div>
+</div>
+
+<div class="row">
+  <div class="col s6">
+    <h3>Accessories</h3>
+    {% if watch.accessorys.count %}
+      {% for accessory in watch.accessorys.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span style="color: {{ accessory.color }}">{{ accessory.color }}</span> {{ accessory.name }}
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'unassoc_accessory' watch.id accessory.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Remove</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No Accessories</h5>
+    {% endif %}
+  </div>
+
+</div>
+<div class="col s6">
+  <h3>Available Accessories</h3>
+  {% if accessorys.count %}
+    {% for accessory in accessorys.all %}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">
+            A <span style="color: {{ accessory.color }}">{{ accessory.color }}</span> {{ accessory.name }}
+          </span>
+        </div>
+        <div class="card-action">
+          <form action="{% url 'assoc_accessory' watch.id accessory.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn">Add</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <h7>This Watch Already Has All Available Accessories</h7>
+  {% endif %}
 </div>
 
 <script>

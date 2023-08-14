@@ -18,7 +18,7 @@ class Accessory(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('accesorys_detail', kwargs={'pk': self.id})
+        return reverse('accessorys_detail', kwargs={'pk': self.id})
 
 class Watch(models.Model): 
     brand = models.CharField(max_length=20)

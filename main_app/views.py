@@ -21,9 +21,12 @@ def watches_index(request):
 
 def watches_detail(request, watch_id):
     watch = Watch.objects.get(id=watch_id)
+    id_list = watch.accessorys.all().values_list('id')
+    accessorys_watch_doesnt_have = Accessory.objects.exclude(id__in=id_list)                                            
     service_form = ServiceForm()
     return render(request, 'watches/detail.html', { 
-        'watch' : watch, 'service_form': service_form 
+        'watch' : watch, 'service_form': service_form,
+        'accessorys' : accessorys_watch_doesnt_have
     })
 
 def add_service(request, watch_id):
@@ -36,7 +39,7 @@ def add_service(request, watch_id):
 
 class WatchCreate(CreateView):
     model = Watch
-    fields = '__all__'
+    fields = ['brand', 'model', 'color', 'band_material', 'interface', 'description']
 
 class WatchUpdate(UpdateView):
     model= Watch
@@ -66,3 +69,12 @@ class AccessoryUpdate(UpdateView):
 class AccessoryDelete(DeleteView):
   model = Accessory
   success_url = '/accessorys'
+
+def assoc_accessory(request, watch_id, accessory_id):
+  Watch.objects.get(id=watch_id).accessorys.add(accessory_id)
+  return redirect('detail', watch_id=watch_id)
+
+
+def unassoc_accessory(request, watch_id, accessory_id):
+  Watch.objects.get(id=watch_id).accessorys.remove(accessory_id)
+  return redirect('detail', watch_id=watch_id)
