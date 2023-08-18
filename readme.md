@@ -20,7 +20,7 @@ morning routines faster and easier.
 
 # Getting Started
 
-[Click to Play Connect Four!](your deployment url here)
+
 
 # Next Steps
 
